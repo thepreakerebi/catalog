@@ -96,7 +96,7 @@ router.delete("/products", async (req, res) => {
         }
         res.status(200).json({
             success: true,
-            message: `${deleteResult.deletedCount} products deleted successfully`,
+            message: `${deleteResult.deletedCount} products deleted`,
         });
     } catch (error) {
         console.log("Error deleting multiple products:", error.message);
@@ -111,9 +111,23 @@ router.put("/products/:id", async (req, res) => {
 
         const updatedData = {};
         if (name) updatedData.name = capitalizeName(name);
-        if (price) updatedData.price = price;
+        if (price) updatedData.price = parseFloat(price) || price;
         if (image) updatedData.image = image;
 
+        // Check for existing product with the same name or image, excluding the current product
+        const conflictingProduct = await Product.findOne({
+            $or: [{ name: updatedData.name }, { image: updatedData.image }],
+            _id: { $ne: id }, // Exclude the current product being updated
+        });
+
+        if (conflictingProduct) {
+            return res.status(400).json({
+                success: false,
+                message: "A product with the same name or image already exists.",
+            });
+        }
+
+        // Update the product
         const product = await Product.findByIdAndUpdate(id, updatedData, { new: true });
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found" });
