@@ -11,6 +11,7 @@ const capitalizeName = (name) => {
         .join(" ");
 };
 
+// route to add new product
 router.post("/products", async (req, res) => {
     const { name, price, image } = req.body;
 
@@ -56,7 +57,7 @@ router.post("/products", async (req, res) => {
     }
 });
 
-
+// route to get all products
 router.get("/products", async (req, res) => {
     try {
         const products = await Product.find();
@@ -67,6 +68,8 @@ router.get("/products", async (req, res) => {
     }
 });
 
+
+// route to delete a product
 router.delete("/products/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -104,7 +107,8 @@ router.delete("/products", async (req, res) => {
     }
 });
 
-router.put("/products/:id", async (req, res) => {
+// route to update a product
+router.patch("/products/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { name, price, image } = req.body;
