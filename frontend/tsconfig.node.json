@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "incremental": true, // Add the 'incremental' option
     "target": "ES2022",
     "lib": ["ES2023"],
     "module": "ESNext",
