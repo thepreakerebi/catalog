@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { ShoppingBag, SquarePlus, Sun, Moon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar = () => {
   const [darkMode, setDarkMode] = useState(() => {
-  if (localStorage.getItem('theme')) {
-    return localStorage.getItem('theme') === 'dark';
-  }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
-});
+    if (localStorage.getItem('theme')) {
+      return localStorage.getItem('theme') === 'dark';
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  const location = useLocation(); // Hook to get the current route
 
   // Toggle dark mode and persist it in localStorage
   const toggleDarkMode = () => {
@@ -36,9 +38,12 @@ export const Navbar = () => {
           </h1>
         </Link>
         <section className="flex items-center gap-4">
-          <Link className="navbar-btn" to="/create">
-            <SquarePlus size={20} />
-          </Link>
+          {/* Conditionally render the "Create" link */}
+          {location.pathname !== '/create' && (
+            <Link className="navbar-btn" to="/create">
+              <SquarePlus size={20} />
+            </Link>
+          )}
           <button
             onClick={toggleDarkMode}
             className="navbar-btn"
