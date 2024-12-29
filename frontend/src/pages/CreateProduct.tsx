@@ -32,7 +32,7 @@ export const CreateProduct = () => {
   setIsLoading(true); // Start loading spinner
   try {
     // Make API call to add the product
-    const response = await fetch('http://localhost:8000/api/products', {
+    const response = await fetch('api/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

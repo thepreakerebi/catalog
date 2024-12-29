@@ -1,16 +1,6 @@
+import autoprefixer from 'autoprefixer';
+import tailwindcss from 'tailwindcss';
 
 export default {
-
-  plugins: [
-
-    require('tailwindcss'),
-
-    require('autoprefixer'),
-
-    require('postcss-apply'),
-
-    require('@apply'),
-
-  ]
-
-}
+  plugins: [tailwindcss(), autoprefixer()],
+};
